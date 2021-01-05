@@ -42,13 +42,15 @@ namespace IPAPI
                         using (StreamReader reader = new StreamReader(stream))
                         {
                             string responce = reader.ReadToEnd();
-                            if (responce.Contains("fail") && responce.Contains("closed"))
+                            Console.WriteLine(responce);
+                            if (responce.Contains("fail") && responce.Contains("closed") || responce.Contains("Invalid IP address or hostname."))
                             {
                                 response.Close();
                                 return false;
                             }
                             else
                             {
+                                response.Close();
                                 return true;
                             }
                         }

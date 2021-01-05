@@ -11,8 +11,8 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            IP.API.Port port = new IP.API.Port("IP");
-            bool valid = port.CheckPort(80);
+            IP.API.Port icmp = new IP.API.Port("locksxreenxs");
+            bool valid = icmp.CheckPort(80); /* Maximum power 4 */
             Console.WriteLine(valid);
             Console.ReadKey();
         }

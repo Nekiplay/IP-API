@@ -7,6 +7,16 @@ IP.API.Port port = new IP.API.Port("IP");
 bool valid = port.CheckPort(80);
 ```
 
+**Recommended Validate Port:**
+```C#
+IP.API.V1 v1 = new IP.API.V1("IP");
+if (v1.IP.IpValid)
+{
+  IP.API.Port port = new IP.API.Port("IP");
+  bool valid = port.CheckPort(80);
+}
+```
+
 **Get IP Information:**
 ```C#
 IP.API.V1 v1 = new IP.API.V1("IP");

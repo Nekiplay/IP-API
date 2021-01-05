@@ -1,7 +1,7 @@
 # IP-API
 **API for IP**
 
-**Validate Port:**
+**If open Port:**
 ```C#
 IP.API.Port port = new IP.API.Port("IP");
 bool valid = port.CheckPort(80);

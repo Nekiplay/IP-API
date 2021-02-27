@@ -55,8 +55,6 @@ namespace IPAPI
                             }
                         }
                     }
-                    response.Close();
-                    return false;
                 }
             }
             public class ICMP

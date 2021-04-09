@@ -11,20 +11,20 @@ bool valid = port.CheckPort(80);
 
 **Get IP Information:**
 ```C#
-IP.API.V1 v1 = new IP.API.V1("IP");
+IP.API.Information IpInformation = new IP.API.Information("IP");
 
-bool ipvalid = v1.IP.IpValid;
-string country = v1.IP.Country;
-string city = v1.IP.City;
-string region = v1.IP.Region;
+bool ipvalid = IpInformation.IP.IpValid;
+string country = IpInformation.IP.Country;
+string city = IpInformation.IP.City;
+string region = IpInformation.IP.Region;
 
-string asn = v1.IP.ASN;
-string provider = v1.IP.Provider;
+string asn = IpInformation.IP.ASN;
+string provider = IpInformation.IP.Provider;
 
-double Latitude = v1.IP.Latitude;
-double Longitude = v1.IP.Longitude;
+double Latitude = IpInformation.IP.Latitude;
+double Longitude = IpInformation.IP.Longitude;
 
-double CountryPopulation = v1.IP.CountryPopulation;
+double CountryPopulation = IpInformation.IP.CountryPopulation;
 ``` 
 
 **Get ICMP Traffic:**

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace IPAPI
 {
@@ -83,12 +85,12 @@ namespace IPAPI
                     }
                 }
             }
-            public class V1
+            public class Information
             {
                 public string IpAddres;
-                public V1Response IP;
+                public InformationResponse IP;
 
-                public class V1Response
+                public class InformationResponse
                 {
                     public bool IpValid;
 
@@ -106,7 +108,73 @@ namespace IPAPI
 
                 }
 
-                public V1(string ip)
+                public async Task<bool> IsTorAsync()
+                {
+                    bool first_detect = false;
+                    bool two_detect = false;
+                    Task firs_detect_task = Task.Factory.StartNew(() =>
+                    {
+                        try
+                        {
+                            using (WebClient wc = new WebClient())
+                            {
+                                string responce = wc.DownloadString("https://check.torproject.org/torbulkexitlist?ip=1.1.1.1");
+                                List<string> splited = new List<string>();
+                                splited.AddRange(responce.Split('\n'));
+                                foreach (string sp in splited)
+                                {
+                                    if (!string.IsNullOrEmpty(sp) && sp.Replace(" ", "") == this.IpAddres.Replace(" ", ""))
+                                    {
+                                        first_detect = true;
+                                    }
+                                }
+                            }
+                        }
+                        catch (WebException ex)
+                        {
+                            first_detect = false;
+                        }
+                    });
+                    Task two_detect_task = Task.Factory.StartNew(() =>
+                    {
+                        try
+                        {
+                            using (WebClient wc = new WebClient())
+                            {
+                                string responce = wc.DownloadString("https://www.dan.me.uk/torlist/");
+                                List<string> splited = new List<string>();
+                                splited.AddRange(responce.Split('\n'));
+                                foreach (string sp in splited)
+                                {
+                                    if (!string.IsNullOrEmpty(sp) && sp.Replace(" ", "") == this.IpAddres.Replace(" ", ""))
+                                    {
+                                        two_detect = true;
+                                    }
+                                }
+                            }
+                        }
+                        catch (WebException ex)
+                        {
+                            two_detect = false;
+                        }
+                    });
+                    await firs_detect_task;
+                    //await two_detect_task;
+                    if (first_detect == true)
+                    {
+                        return true;
+                    }
+                    else if (two_detect == true)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+                public Information(string ip)
                 {
                     this.IpAddres = ip;
 
@@ -118,7 +186,7 @@ namespace IPAPI
 
                         if (error != "true")
                         {
-                            V1Response v1Response = new V1Response();
+                            InformationResponse v1Response = new InformationResponse();
                             v1Response.IpValid = true;
 
                             v1Response.City = Regex.Match(Response, "<city>(.*)</city>").Groups[1].Value;
@@ -137,7 +205,7 @@ namespace IPAPI
                         }
                         else
                         {
-                            this.IP = new V1Response
+                            this.IP = new InformationResponse
                             {
                                 IpValid = false,
                             };

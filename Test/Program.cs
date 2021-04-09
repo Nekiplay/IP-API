@@ -11,9 +11,13 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            IP.API.Port icmp = new IP.API.Port("locksxreenxs");
-            bool valid = icmp.CheckPort(80); /* Maximum power 4 */
-            Console.WriteLine(valid);
+            IP.API.Information information = new IP.API.Information("51.15.42.223");
+            bool istor = information.IsTorAsync().Result;
+            Console.WriteLine("Страна: " + information.IP.Country);
+            Console.WriteLine("Регион: " + information.IP.Region);
+            Console.WriteLine("Город: " + information.IP.City);
+            Console.WriteLine("Провайдер: " + information.IP.Provider);
+            Console.WriteLine("Это Tor? " + istor.ToString().Replace("True", "Да").Replace("False", "Нет."));
             Console.ReadKey();
         }
     }

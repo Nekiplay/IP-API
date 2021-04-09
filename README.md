@@ -13,6 +13,8 @@ bool valid = port.CheckPort(80);
 ```C#
 IP.API.Information IpInformation = new IP.API.Information("IP");
 
+bool IsTor = information.IsTorAsync().Result;
+
 bool ipvalid = IpInformation.IP.IpValid;
 string country = IpInformation.IP.Country;
 string city = IpInformation.IP.City;

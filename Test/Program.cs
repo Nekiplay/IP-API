@@ -11,13 +11,10 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            IP.API.Information information = new IP.API.Information("51.15.42.223");
-            bool istor = information.IsTorAsync().Result;
-            Console.WriteLine("Страна: " + information.IP.Country);
-            Console.WriteLine("Регион: " + information.IP.Region);
-            Console.WriteLine("Город: " + information.IP.City);
-            Console.WriteLine("Провайдер: " + information.IP.Provider);
-            Console.WriteLine("Это Tor? " + istor.ToString().Replace("True", "Да").Replace("False", "Нет."));
+            IPAPI.Services.ICMP information = new IPAPI.Services.ICMP();
+            information.Init("5.35.117.227");
+            Console.WriteLine("Отправлено: " + information.Resived);
+            Console.WriteLine("ICMP время ответа: " + information.Time);
             Console.ReadKey();
         }
     }
